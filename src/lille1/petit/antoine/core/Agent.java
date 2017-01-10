@@ -7,5 +7,9 @@ public interface Agent {
 	public void update();
 	
 	public void decide();
-
+	
+	public Color getColor();
+	
+	public Position getPosition();
+	
 }

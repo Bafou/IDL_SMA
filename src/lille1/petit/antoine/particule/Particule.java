@@ -1,17 +1,16 @@
 package lille1.petit.antoine.particule;
 
 import java.awt.Color;
+import java.util.Random;
 
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
+import lille1.petit.antoine.core.Position;
+import lille1.petit.antoine.core.PropertiesReader;
 
 public class Particule implements Agent {
 
-	/** Position sur l'axe X */
-	protected int posX;
-
-	/** Position sur l'axe Y */
-	protected int posY;
+	protected Position position;
 
 	/** Direction sur l'axe X */
 	private int stepX;
@@ -21,31 +20,17 @@ public class Particule implements Agent {
 
 	/** Couleur de l'agent */
 	private Color color;
-	
+
 	private boolean hasChange;
 
 	/** Environnement contenant cet agent */
 	private Environment environment;
 
-	public int getPosX() {
-		return posX;
-	}
-
-	public void setPosX(final int posX) {
-		this.posX = posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
-	public void setPosY(final int posY) {
-		this.posY = posY;
-	}
+	private Random rand;
 
 	public int getStepX() {
 		return stepX;
-	}	
+	}
 
 	public void setStepX(final int stepX) {
 		this.stepX = stepX;
@@ -66,7 +51,6 @@ public class Particule implements Agent {
 	public void setColor(final Color color) {
 		this.color = color;
 	}
-	
 
 	public boolean isHasChange() {
 		return hasChange;
@@ -76,31 +60,69 @@ public class Particule implements Agent {
 		this.hasChange = asChange;
 	}
 
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(final Position position) {
+		this.position = position;
+	}
+
+	public Particule(final Environment environment, final Random rand) {
+		this.rand = rand;
+		this.environment = environment;
+
+		int r = rand.nextInt(200);
+		int g = rand.nextInt(200);
+		int b = rand.nextInt(200);
+		this.color = new Color(r, g, b);
+		position = environment.getNextFreePosition();
+		environment.getAgentTab()[position.getPosX()][position.getPosY()] = this;
+
+		setDirection();
+	}
 
 	public void decide() {
-		int nextX = posX + stepX;
-		int nextY = posY + stepY;
-
-		if (!environment.isToric()) {
-			if (nextX >= environment.getAgentTab().length) {
-				stepX = -stepX;
-				hasChange = true;
+		int nextX = position.getPosX() + stepX;
+		int nextY = position.getPosY() + stepY;
+		if (environment.isToric()) {
+			if (nextX < 0) {
+				nextX = environment.getAgentTab().length + stepX;
+			} else {
+				nextX = nextX % environment.getAgentTab().length;
 			}
-			if (nextY >= environment.getAgentTab()[0].length) {
-				stepY = -stepY;
-				hasChange = true;
+			if (nextY < 0) {
+				nextY = environment.getAgentTab()[0].length + stepY;
+			} else {
+				nextY = nextY % environment.getAgentTab()[0].length;
 			}
 		}
-		Agent agent = environment.getAgentTab()[nextX][nextY];
-		if (agent != null) {
-			if (agent instanceof Particule) {
-				final Particule particule = (Particule) agent;
-				swapStep(particule);
+
+		if (!environment.isToric()) {
+			if (nextX >= environment.getAgentTab().length || nextX < 0) {
+				stepX = -stepX;
 				hasChange = true;
+				if (PropertiesReader.trace) System.out.println("Agent," + position.getPosX() + ","+ position.getPosY() + "," + (nextX <0 ? "Mur gauche": "Mur droit"));
+			}
+			if (nextY >= environment.getAgentTab()[0].length || nextY < 0) {
+				stepY = -stepY;
+				hasChange = true;
+				if (PropertiesReader.trace) System.out.println("Agent," + position.getPosX() + ","+ position.getPosY() + "," + (nextY <0 ? "Mur haut": "Mur bas"));
+			}
+		}
+		if (!hasChange) {
+			Agent agent = environment.getAgentTab()[nextX][nextY];
+			if (agent != null) {
+				if (agent instanceof Particule) {
+					final Particule particule = (Particule) agent;
+					swapStep(particule);
+					hasChange = true;
+					if (PropertiesReader.trace) System.out.println("Agent," + position.getPosX() + ","+ position.getPosY() + "," + "Autre agent (" + agent.getPosition().posX + "; " + agent.getPosition().posY + ")");
+				}
 			}
 		}
 	}
-	
+
 	private void swapStep(final Particule particule) {
 		int footOtherAgentX = particule.getStepX();
 		int footOtherAgentY = particule.getStepY();
@@ -118,8 +140,61 @@ public class Particule implements Agent {
 		}
 		hasChange = false;
 	}
-	
+
 	public void move() {
-		
+		int nextPosX = position.posX + stepX;
+		int nextPosY = position.posY + stepY;
+		if (environment.isToric() && nextPosX < 0) {
+			nextPosX = environment.getAgentTab().length + stepX;
+		} else {
+			nextPosX = nextPosX % environment.getAgentTab().length;
+		}
+		if (environment.isToric() && nextPosY < 0) {
+			nextPosY = environment.getAgentTab()[0].length + stepY;
+		} else {
+			nextPosY = nextPosY % environment.getAgentTab()[0].length;
+		}
+		environment.getAgentTab()[position.getPosX()][position.getPosY()] = null;
+		position.setPosX(nextPosX);
+		position.setPosY(nextPosY);
+		environment.getAgentTab()[position.getPosX()][position.getPosY()] = this;
+	}
+
+	private void setDirection() {
+		switch (rand.nextInt(8)) {
+		case 0:
+			stepX = -1;
+			stepY = -1;
+			break;
+		case 1:
+			stepX = -1;
+			stepY = 0;
+			break;
+		case 2:
+			stepX = 0;
+			stepY = -1;
+			break;
+		case 3:
+			stepX = 1;
+			stepY = -1;
+			break;
+		case 4:
+			stepX = 0;
+			stepY = 1;
+			break;
+		case 5:
+			stepX = 1;
+			stepY = 0;
+			break;
+		case 6:
+			stepX = 1;
+			stepY = 1;
+			break;
+		case 7:
+			stepX = -1;
+			stepY = 1;
+			break;
+		}
+
 	}
 }
