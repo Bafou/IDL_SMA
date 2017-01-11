@@ -131,6 +131,11 @@ public class Particule implements Agent {
 		particule.setHasChange(true);
 		this.stepX = footOtherAgentX;
 		this.stepY = footOtherAgentY;
+//		particule.setStepX(stepX);
+//		particule.setStepY(stepY);
+//		particule.setHasChange(true);
+//		this.stepX = -stepX;
+//		this.stepY = -stepY;
 	}
 
 	@Override

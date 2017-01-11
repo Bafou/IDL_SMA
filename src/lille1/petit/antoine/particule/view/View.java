@@ -55,7 +55,7 @@ public class View extends JPanel implements Observer {
 			int gridDivisionX = gridSizeX;
 			int gridDivisionY = gridSizeY;
 			for (int i = 1; i < gridDivisionX; i++) {
-				int x = i * ( boxSize);
+				int x = i * (boxSize);
 				g2.drawLine(x, 0, x, PropertiesReader.boxSize * PropertiesReader.gridSizeX);
 			}
 			for (int i = 1; i < gridDivisionY; i++) {
