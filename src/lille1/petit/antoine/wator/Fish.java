@@ -1,33 +1,28 @@
 package lille1.petit.antoine.wator;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 
-import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
+import lille1.petit.antoine.core.PropertiesReader;
 
-public class Fish implements Agent {
-	
-	protected Position position;
+public class Fish extends WaterAnimal {
 	
 	protected int breedTime; 
 	
-	protected Environment environment;
+	protected int age;
 	
 	protected Random rand;
 	
-	public Fish (final Environment env, final Random random) {
+	public Fish (final Environment env, final Random random, final Position pos, final SMAWator smaW) {
+		super (env, random, pos, smaW);
 		rand = random;
 		environment = env;
-	}
-
-	public Random getRand() {
-		return rand;
-	}
-
-	public void setRand(Random rand) {
-		this.rand = rand;
+		age = 0;
+		breedTime = PropertiesReader.breedAgeFish;
+		color = Color.GREEN;
 	}
 
 	public int getBreedTime() {
@@ -38,38 +33,51 @@ public class Fish implements Agent {
 		this.breedTime = breedTime;
 	}
 
-	public Environment getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(final Environment environment) {
-		this.environment = environment;
-	}
-
-	@Override
-	public Position getPosition() {
-		return position;
-	}
-
-	public void setPosition(final Position position) {
-		this.position = position;
-	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		if (age >= breedTime) color= Color.BLUE;
 	}
 
 	@Override
 	public void decide() {
-		// TODO Auto-generated method stub
+		super.decide();
+		List<Position> freeSpots = getFreeSpotsAround();
+		
+		boolean move = false;
+		Position p = null;
+		
+		if(!freeSpots.isEmpty()){
+			p = freeSpots.get(rand.nextInt(freeSpots.size()));
+			move = true;
+		}
+		
+		if(move){
+			int previousX = position.getPosX(),
+					previousY = position.getPosY();
+			moveTo(p);
 
+			if(age % breedTime  == 0){
+				giveBirth(previousX, previousY);
+			}
+		}
 	}
 
 	@Override
-	public Color getColor() {
-		return Color.BLUE;
+	protected void giveBirth(int x, int y) {
+		Fish fish = new Fish(environment, rand, new Position(x, y),smaWator);
+		environment.getAgentTab()[x][y] = fish;
+		smaWator.addAgent(fish);
+	}
+
+	@Override
+	public boolean isShark() {
+		return false;
+	}
+
+	@Override
+	public boolean isFish() {
+		return true;
 	}
 
 

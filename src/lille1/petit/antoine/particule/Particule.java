@@ -8,9 +8,9 @@ import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
 import lille1.petit.antoine.core.PropertiesReader;
 
-public class Particule implements Agent {
+public class Particule extends Agent {
 
-	protected Position position;
+	
 
 	/** Direction sur l'axe X */
 	private int stepX;
@@ -18,15 +18,10 @@ public class Particule implements Agent {
 	/** Direction sur l'axe Y */
 	private int stepY;
 
-	/** Couleur de l'agent */
-	private Color color;
-
+	
 	private boolean hasChange;
 
-	/** Environnement contenant cet agent */
-	private Environment environment;
-
-	private Random rand;
+	
 
 	public int getStepX() {
 		return stepX;
@@ -44,14 +39,6 @@ public class Particule implements Agent {
 		this.stepY = stepY;
 	}
 
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(final Color color) {
-		this.color = color;
-	}
-
 	public boolean isHasChange() {
 		return hasChange;
 	}
@@ -60,25 +47,15 @@ public class Particule implements Agent {
 		this.hasChange = asChange;
 	}
 
-	public Position getPosition() {
-		return position;
-	}
-
-	public void setPosition(final Position position) {
-		this.position = position;
-	}
-
-	public Particule(final Environment environment, final Random rand) {
-		this.rand = rand;
+	public Particule(final Environment environment, final Random rand, final Position pos) {
+		super(environment, rand, pos);
 		this.environment = environment;
 
 		int r = rand.nextInt(200);
 		int g = rand.nextInt(200);
 		int b = rand.nextInt(200);
 		this.color = new Color(r, g, b);
-		position = environment.getNextFreePosition();
-		environment.getAgentTab()[position.getPosX()][position.getPosY()] = this;
-
+		
 		setDirection();
 	}
 
@@ -159,10 +136,7 @@ public class Particule implements Agent {
 		} else {
 			nextPosY = nextPosY % environment.getAgentTab()[0].length;
 		}
-		environment.getAgentTab()[position.getPosX()][position.getPosY()] = null;
-		position.setPosX(nextPosX);
-		position.setPosY(nextPosY);
-		environment.getAgentTab()[position.getPosX()][position.getPosY()] = this;
+		moveTo(new Position(nextPosX, nextPosY));
 	}
 
 	private void setDirection() {

@@ -12,8 +12,6 @@ public class Environment {
 
 	private boolean isToric;
 
-	private SMA sma;
-	
 	private Random rand;
 
 	public boolean isToric() {
@@ -33,7 +31,6 @@ public class Environment {
 	}
 
 	public Environment(final SMA sma, final Random rand) {
-		this.sma = sma;
 		this.isToric = PropertiesReader.toric;
 		this.agentTab = new Agent[PropertiesReader.gridSizeX][PropertiesReader.gridSizeY];
 		this.freePosition = new ArrayList<Position>();
@@ -54,5 +51,21 @@ public class Environment {
 			}
 		}
 	}
+	
+	public void removeAt(final Position pos ) {
+		agentTab[pos.getPosX()][pos.getPosY()] = null;
+	}
+	
+	public Agent getAgentAt (final Position pos) {
+		return agentTab[pos.getPosX()][pos.getPosY()];
+	}
+	
+	public void move(int previousX, int previousY, int newX, int newY){
+		agentTab[newX][newY] = agentTab[previousX][previousY];
+		agentTab[previousX][previousY] = null;
+	}
 
+	public boolean isInside(final Position pos) {
+		return (pos.getPosX() >=0) && (pos.getPosX() < agentTab.length) && (pos.getPosY() >=0) && (pos.getPosY() < agentTab[0].length);
+	}
 }

@@ -3,6 +3,7 @@ package lille1.petit.antoine.particule;
 import java.util.ArrayList;
 
 import lille1.petit.antoine.core.Agent;
+import lille1.petit.antoine.core.Position;
 import lille1.petit.antoine.core.PropertiesReader;
 import lille1.petit.antoine.core.SMA;
 
@@ -17,8 +18,19 @@ public class SMAParticule extends SMA {
 		agentList = new ArrayList<Agent>();
 	
 		for(int i = 0; i < PropertiesReader.nbParticles && i < PropertiesReader.gridSizeX*PropertiesReader.gridSizeY; i++){
-			agentList.add(new Particule(environment, rand));
+			Position position = environment.getNextFreePosition();
+			agentList.add(new Particule(environment, rand,position));
 		}
+	}
+
+	@Override
+	protected void writeOutput() {
+				
+	}
+
+	@Override
+	protected void initOutput() {
+		
 	}
 
 }

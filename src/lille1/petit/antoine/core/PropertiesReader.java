@@ -21,15 +21,20 @@ public class PropertiesReader {
 	public static int refresh=1;
 	public static int nbParticles=20;
 	public static boolean toric=false;
+	public static int nbShark = 20;
+	public static int nbFish = 100;
+	public static int breedAgeShark = 10;
+	public static int breedAgeFish = 2;
+	public static int starveTime = 3;
 	
-	public static void initProperties() {
+	public static void initProperties(final String path) {
 		
 		final Properties prop = new Properties();
 		InputStream input = null;
 		
 		try {
 
-			input = new FileInputStream("src/lille1/petit/antoine/particule/Particules.properties");
+			input = new FileInputStream(path);
 
 			prop.load(input);
 
@@ -47,7 +52,11 @@ public class PropertiesReader {
 			refresh = Integer.parseInt(prop.getProperty("refresh"));
 			nbParticles = Integer.parseInt(prop.getProperty("nbParticles"));
 			toric = Boolean.parseBoolean(prop.getProperty("toric"));
-			
+			nbShark = Integer.parseInt(prop.getProperty("nbShark"));
+			nbFish = Integer.parseInt(prop.getProperty("nbFish"));
+			breedAgeShark = Integer.parseInt(prop.getProperty("breedAgeShark"));
+			breedAgeFish = Integer.parseInt(prop.getProperty("breedAgeFish"));
+			starveTime = Integer.parseInt(prop.getProperty("starveTime"));
 
 		} catch (final IOException ex) {
 			ex.printStackTrace();

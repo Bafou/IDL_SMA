@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -64,7 +65,7 @@ public class View extends JPanel implements Observer {
 			}
 		}
 
-		List<Agent> agentlist = sma.getAgentList();
+		List<Agent> agentlist = new ArrayList<Agent>(sma.getAgentList());
 		for (final Agent agent : agentlist) {
 			g2.setColor(agent.getColor());
 			g2.fillOval(agent.getPosition().getPosX()*boxSize, agent.getPosition().getPosY()*boxSize, boxSize, boxSize);
