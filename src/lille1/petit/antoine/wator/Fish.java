@@ -12,8 +12,6 @@ public class Fish extends WaterAnimal {
 	
 	protected int breedTime; 
 	
-	protected int age;
-	
 	protected Random rand;
 	
 	public Fish (final Environment env, final Random random, final Position pos, final SMAWator smaW) {
@@ -36,7 +34,8 @@ public class Fish extends WaterAnimal {
 
 	@Override
 	public void update() {
-		if (age >= breedTime) color= Color.BLUE;
+		if (age >= breedTime) 
+			color= Color.BLUE;
 	}
 
 	@Override

@@ -59,7 +59,6 @@ public class SMAWator extends SMA {
 			outputWriter = new BufferedWriter(new FileWriter(output));
 			outputWriter.write("time,nb fishs,nb sharks\n");
 		} catch (IOException e) {
-			// Do nothing
 			e.printStackTrace();
 		}
 	}
