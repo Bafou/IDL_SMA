@@ -13,6 +13,8 @@ public class Environment {
 	private boolean isToric;
 
 	private Random rand;
+	
+	private SMA sma;
 
 	public boolean isToric() {
 		return isToric;
@@ -36,6 +38,7 @@ public class Environment {
 		this.freePosition = new ArrayList<Position>();
 		initFreePosition(PropertiesReader.gridSizeX, PropertiesReader.gridSizeY);
 		this.rand = rand;
+		this.sma = sma;
 	}
 
 	public Position getNextFreePosition() {
@@ -53,6 +56,7 @@ public class Environment {
 	}
 	
 	public void removeAt(final Position pos ) {
+		sma.removeAgent(agentTab[pos.getPosX()][pos.getPosY()]);
 		agentTab[pos.getPosX()][pos.getPosY()] = null;
 	}
 	

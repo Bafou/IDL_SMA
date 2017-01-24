@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.swing.JScrollPane;
 
 import lille1.petit.antoine.core.PropertiesReader;
-import lille1.petit.antoine.particule.view.GUIHelper;
-import lille1.petit.antoine.particule.view.View;
+import lille1.petit.antoine.core.view.GUIHelper;
+import lille1.petit.antoine.core.view.View;
 
 public class Main {
 	

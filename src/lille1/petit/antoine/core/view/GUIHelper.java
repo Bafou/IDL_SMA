@@ -1,4 +1,4 @@
-package lille1.petit.antoine.particule.view;
+package lille1.petit.antoine.core.view;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

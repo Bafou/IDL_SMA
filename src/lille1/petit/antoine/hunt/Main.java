@@ -1,4 +1,4 @@
-package lille1.petit.antoine.particule;
+package lille1.petit.antoine.hunt;
 
 import java.io.IOException;
 
@@ -10,24 +10,26 @@ import lille1.petit.antoine.core.view.View;
 
 public class Main {
 	
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		
-		PropertiesReader.initProperties("src/lille1/petit/antoine/particule/Particules.properties");
-		SMAParticule smaParticule = new SMAParticule();
+		PropertiesReader.initProperties("src/lille1/petit/antoine/hunt/Hunt.properties");
+		SMAHunt smaHunt = new SMAHunt();
 
 		View view = new View();
-		smaParticule.addObserver(view);
+		view.setFocusable(true);
+		smaHunt.addObserver(view);
+		view.addKeyListener(smaHunt.getAvatar());
+		view.addKeyListener(PropertiesReader.getInstance());
 		
 		JScrollPane scrollPane = new JScrollPane(view);
 		GUIHelper.showOnFrame(scrollPane,"S.M.A");
-		
+		scrollPane.addKeyListener(smaHunt.getAvatar());
 		try {
-			smaParticule.run();
+			smaHunt.run();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+			
 	}
 
 }

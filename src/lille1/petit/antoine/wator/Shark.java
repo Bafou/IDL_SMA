@@ -127,9 +127,7 @@ public class Shark extends WaterAnimal {
 
 	
 	private void eatFishAt(Position p){
-		Fish fishToBeEaten = (Fish) environment.getAgentAt(p);
 		environment.removeAt(p);
-		smaWator.removeAgent(fishToBeEaten);
 	}
 
 	@Override

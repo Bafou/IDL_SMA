@@ -1,37 +1,51 @@
 package lille1.petit.antoine.core;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertiesReader {
-	
-	public static int gridSizeX=20;
-	public static int gridSizeY=20;
-	public static int canvasSizeX=1200;
-	public static int canvasSizeY=1200;
-	public static int boxSize=50;
-	public static int delay=40;
-	public static int sheduling=0;
-	public static int nbTicks=0;
-	public static boolean grid=true;
-	public static boolean trace=false;
-	public static int seed=0;
-	public static int refresh=1;
-	public static int nbParticles=20;
-	public static boolean toric=false;
+public class PropertiesReader implements KeyListener {
+
+	public static int gridSizeX = 20;
+	public static int gridSizeY = 20;
+	public static int canvasSizeX = 1200;
+	public static int canvasSizeY = 1200;
+	public static int boxSize = 50;
+	public static int delay = 40;
+	public static int sheduling = 0;
+	public static int nbTicks = 0;
+	public static boolean grid = true;
+	public static boolean trace = false;
+	public static int seed = 0;
+	public static int refresh = 1;
+	public static int nbParticles = 20;
+	public static boolean toric = false;
 	public static int nbShark = 20;
 	public static int nbFish = 100;
 	public static int breedAgeShark = 10;
 	public static int breedAgeFish = 2;
 	public static int starveTime = 3;
-	
-	public static void initProperties(final String path) {
+	public static int defenderLife = 20;
+	public static int avatarSpeed = 2;
+	public static int hunterSpeed = 5;
+	private static PropertiesReader INSTANCE = new PropertiesReader();
+
+	private PropertiesReader () {
 		
+	}
+	
+	public static PropertiesReader getInstance() {
+		return INSTANCE;
+	}
+
+	public static void initProperties(final String path) {
+
 		final Properties prop = new Properties();
 		InputStream input = null;
-		
+
 		try {
 
 			input = new FileInputStream(path);
@@ -69,7 +83,40 @@ public class PropertiesReader {
 				}
 			}
 		}
-		
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
+			if (avatarSpeed > 1)
+				avatarSpeed--;
+			break;
+		case KeyEvent.VK_Z:
+			avatarSpeed++;
+			break;
+		case KeyEvent.VK_O:
+			if (hunterSpeed > 1)
+				hunterSpeed--;
+			break;
+		case KeyEvent.VK_P:
+			hunterSpeed++;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

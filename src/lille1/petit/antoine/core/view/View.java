@@ -1,4 +1,4 @@
-package lille1.petit.antoine.particule.view;
+package lille1.petit.antoine.core.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,15 +17,15 @@ import lille1.petit.antoine.core.SMA;
 
 public class View extends JPanel implements Observer {
 
-	private SMA sma;
+	protected SMA sma;
 
-	private int gridSizeX;
+	protected int gridSizeX;
 
-	private int gridSizeY;
+	protected int gridSizeY;
 
-	private int boxSize;
+	protected int boxSize;
 
-	private boolean grid;
+	protected boolean grid;
 
 	@Override
 	public void update(final Observable observable, final Object arg) {
