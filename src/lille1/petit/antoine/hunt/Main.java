@@ -13,13 +13,14 @@ public class Main {
 public static void main(String[] args) {
 		
 		PropertiesReader.initProperties("src/lille1/petit/antoine/hunt/Hunt.properties");
+		PropertiesReaderHunt.initProperties("src/lille1/petit/antoine/hunt/Hunt.properties");
 		SMAHunt smaHunt = new SMAHunt();
 
 		View view = new View();
 		view.setFocusable(true);
 		smaHunt.addObserver(view);
 		view.addKeyListener(smaHunt.getAvatar());
-		view.addKeyListener(PropertiesReader.getInstance());
+		view.addKeyListener(PropertiesReaderHunt.getInstance());
 		
 		JScrollPane scrollPane = new JScrollPane(view);
 		GUIHelper.showOnFrame(scrollPane,"S.M.A");

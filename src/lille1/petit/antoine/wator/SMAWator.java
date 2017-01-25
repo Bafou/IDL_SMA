@@ -20,11 +20,11 @@ public class SMAWator extends SMA {
 	private void initAgent(){
 		agentList = new ArrayList<Agent>();
 		int i= 0;
-		for(; i < PropertiesReader.nbFish && i < PropertiesReader.gridSizeX*PropertiesReader.gridSizeY; i++){
+		for(; i < PropertiesReaderWator.nbFish && i < PropertiesReader.gridSizeX*PropertiesReader.gridSizeY; i++){
 			Position position = environment.getNextFreePosition();
 			agentList.add(new Fish(environment, rand, position, this));
 		}
-		for(int j = 0; j < PropertiesReader.nbShark && i + j < PropertiesReader.gridSizeX * PropertiesReader.gridSizeY; j++) {
+		for(int j = 0; j < PropertiesReaderWator.nbShark && i + j < PropertiesReader.gridSizeX * PropertiesReader.gridSizeY; j++) {
 			Position position = environment.getNextFreePosition();
 			agentList.add(new Shark(environment, rand, position, this));
 		}

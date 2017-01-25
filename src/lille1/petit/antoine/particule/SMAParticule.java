@@ -17,7 +17,7 @@ public class SMAParticule extends SMA {
 	private void initAgent(){
 		agentList = new ArrayList<Agent>();
 	
-		for(int i = 0; i < PropertiesReader.nbParticles && i < PropertiesReader.gridSizeX*PropertiesReader.gridSizeY; i++){
+		for(int i = 0; i < PropertiesReaderParticule.nbParticles && i < PropertiesReader.gridSizeX*PropertiesReader.gridSizeY; i++){
 			Position position = environment.getNextFreePosition();
 			agentList.add(new Particule(environment, rand,position));
 		}

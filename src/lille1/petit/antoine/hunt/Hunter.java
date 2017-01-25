@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
-import lille1.petit.antoine.core.PropertiesReader;
 
 public class Hunter extends Agent {
 
@@ -28,7 +27,7 @@ public class Hunter extends Agent {
 
 	@Override
 	public void update() {
-		if (tick % PropertiesReader.hunterSpeed == 0) {
+		if (tick % PropertiesReaderHunt.hunterSpeed == 0) {
 			move();
 		}
 
@@ -36,11 +35,9 @@ public class Hunter extends Agent {
 
 	@Override
 	public void decide() {
-		if (tick % PropertiesReader.hunterSpeed == 0) {
+		if (tick % PropertiesReaderHunt.hunterSpeed == 0) {
 			nextMove = dijkstra.getNextMove(position);
-		} else {
-//			this.needToFreeze = true;
-		}
+		} 
 		tick++;
 	}
 

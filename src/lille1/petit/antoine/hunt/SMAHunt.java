@@ -33,16 +33,16 @@ public class SMAHunt extends SMA {
 		Avatar avatar = new Avatar(environment, rand, position, dijkstra,this);
 		agentList.add(avatar);
 		this.avatar = avatar;
-		int nbWall = PropertiesReader.percentageWall * PropertiesReader.gridSizeX * PropertiesReader.gridSizeY / 100;
+		int nbWall = PropertiesReaderHunt.percentageWall * PropertiesReader.gridSizeX * PropertiesReader.gridSizeY / 100;
 		for (int i = 0; i < nbWall; i++) {
 			position = environment.getNextFreePosition();
 			agentList.add(new Wall(environment, rand, position));
 		}
-		for (int i = 0; i < PropertiesReader.nbDefender; i++) {
+		for (int i = 0; i < PropertiesReaderHunt.nbDefender; i++) {
 			position = environment.getNextFreePosition();
 			agentList.add(new Defender(environment, rand, position));
 		}
-		for (int i = 0; i < PropertiesReader.nbHunter; i++) {
+		for (int i = 0; i < PropertiesReaderHunt.nbHunter; i++) {
 			position = environment.getNextFreePosition();
 			agentList.add(new Hunter(environment, rand, position, dijkstra, this));
 		}
@@ -69,8 +69,8 @@ public class SMAHunt extends SMA {
 	@Override
 	protected void actionTurn(int tick) {
 		environment.refreshFreePosition();
-		int nbDefender = rand.nextInt(PropertiesReader.nbDefender) + 1;
-		if (tick % PropertiesReader.defenderLife == 0) {
+		int nbDefender = rand.nextInt(PropertiesReaderHunt.nbDefender) + 1;
+		if (tick % PropertiesReaderHunt.defenderLife == 0) {
 			for (int i = 0; i < nbDefender; i++) {
 				Position position = environment.getNextFreePosition();
 				addAgent(new Defender(environment, rand, position));

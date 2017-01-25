@@ -13,6 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		PropertiesReader.initProperties("src/lille1/petit/antoine/particule/Particules.properties");
+		PropertiesReaderParticule.initProperties("src/lille1/petit/antoine/particule/Particules.properties");
 		SMAParticule smaParticule = new SMAParticule();
 
 		View view = new View();

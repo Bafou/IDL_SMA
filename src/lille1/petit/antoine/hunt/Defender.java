@@ -6,7 +6,6 @@ import java.util.Random;
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
-import lille1.petit.antoine.core.PropertiesReader;
 
 public class Defender extends Agent {
 
@@ -15,7 +14,7 @@ public class Defender extends Agent {
 	public Defender(Environment environment, Random rand, Position pos) {
 		super(environment, rand, pos);
 		color = Color.ORANGE;
-		life = PropertiesReader.defenderLife;
+		life = PropertiesReaderHunt.defenderLife;
 	}
 
 	@Override

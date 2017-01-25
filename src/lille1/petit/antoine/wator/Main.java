@@ -13,6 +13,7 @@ public class Main {
 public static void main(String[] args) {
 		
 		PropertiesReader.initProperties("src/lille1/petit/antoine/wator/Wator.properties");
+		PropertiesReaderWator.initProperties("src/lille1/petit/antoine/wator/Wator.properties");
 		SMAWator smaWator = new SMAWator();
 
 		View view = new View();

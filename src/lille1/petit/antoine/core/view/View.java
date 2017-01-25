@@ -18,6 +18,11 @@ import lille1.petit.antoine.core.SMA;
 
 public class View extends JPanel implements Observer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected SMA sma;
 
 	protected int gridSizeX;

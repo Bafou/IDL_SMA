@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
-import lille1.petit.antoine.core.PropertiesReader;
 
 public class Avatar extends Agent implements KeyListener {
 
@@ -35,7 +34,7 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void update() {
-		if (tick % PropertiesReader.avatarSpeed == 0) {
+		if (tick % PropertiesReaderHunt.avatarSpeed == 0) {
 			dijkstra.compute(this.position, invicibility > 0);
 			if (invicibility <= 0) {
 				color = Color.BLUE;
@@ -83,7 +82,7 @@ public class Avatar extends Agent implements KeyListener {
 			environment.removeAt(collided.getPosition());
 			defendersEated++;
 			setInvicibleColor();
-			invicibility = PropertiesReader.invicibilityTime;
+			invicibility = PropertiesReaderHunt.invicibilityTime;
 		} else if (collided instanceof Hunter) {
 			if (invicibility <= 0) {
 				JOptionPane.showMessageDialog(null, "You loose");
@@ -173,8 +172,6 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.Random;
 
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
-import lille1.petit.antoine.core.PropertiesReader;
 
 public class Fish extends WaterAnimal {
 	
@@ -19,7 +18,7 @@ public class Fish extends WaterAnimal {
 		rand = random;
 		environment = env;
 		age = 0;
-		breedTime = PropertiesReader.breedAgeFish;
+		breedTime = PropertiesReaderWator.breedAgeFish;
 		color = Color.GREEN;
 	}
 
