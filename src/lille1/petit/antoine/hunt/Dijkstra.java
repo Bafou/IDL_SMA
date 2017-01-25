@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Position;
 
 public class Dijkstra {
@@ -13,38 +14,38 @@ public class Dijkstra {
 	private Set<Position> unvisited;
 	private Set<Position> visited;
 	private SMAHunt sma;
-	private List<Position> surroundings;
+	private List<Position> posNext;
 	private boolean negateValue;
 
-	public Dijkstra(int sizeX, int sizeY, SMAHunt sma) {
+	public Dijkstra(final int sizeX, final int sizeY, final SMAHunt sma) {
 		this.sma = sma;
 		cells = new int[sizeX][sizeY];
 		unvisited = new HashSet<Position>();
 		visited = new HashSet<Position>();
-		surroundings = new ArrayList<Position>();
-		surroundings.add(new Position(1, 0));
-		surroundings.add(new Position(1, 1));
-		surroundings.add(new Position(0, 1));
-		surroundings.add(new Position(-1, 1));
-		surroundings.add(new Position(-1, 0));
-		surroundings.add(new Position(-1, -1));
-		surroundings.add(new Position(0, -1));
-		surroundings.add(new Position(1, -1));
+		posNext = new ArrayList<Position>();
+		posNext.add(new Position(1, 0));
+		posNext.add(new Position(1, 1));
+		posNext.add(new Position(0, 1));
+		posNext.add(new Position(-1, 1));
+		posNext.add(new Position(-1, 0));
+		posNext.add(new Position(-1, -1));
+		posNext.add(new Position(0, -1));
+		posNext.add(new Position(1, -1));
 		negateValue = false;
 	}
 
-	public int getCellValue(Position p) {
+	public int getCellValue(final Position p) {
 		return cells[p.getPosX()][p.getPosY()];
 	}
 
-	public Position getNextMove(Position p) {
+	public Position getNextMove(final Position p) {
 
 		int value = cells[p.getPosX()][p.getPosY()];
 		if (negateValue) {
 			value = 0;
 		}
 		Position nextMove = new Position(0, 0);
-		for (Position surrounding : surroundings) {
+		for (Position surrounding : posNext) {
 			int x = p.getPosX() + surrounding.getPosX();
 			int y = p.getPosY() + surrounding.getPosY();
 			if (x >= 0 && x < cells.length && y >= 0 && y < cells[0].length) {
@@ -75,8 +76,8 @@ public class Dijkstra {
 		for (int x = 0; x < cells.length; x++) {
 			for (int y = 0; y < cells[x].length; y++) {
 				cells[x][y] = cells.length * cells[x].length;
-				if ((sma.getEnvironment().getAgentTab()[x][y] != null
-						&& sma.getEnvironment().getAgentTab()[x][y] instanceof Wall)) {
+				Agent agent = sma.getEnvironment().getAgentTab()[x][y];
+				if (agent != null	&& ((agent instanceof Wall) || (agent instanceof Defender) || (agent instanceof Winner))) {
 					visited.add(new Position(x, y));
 				}
 			}

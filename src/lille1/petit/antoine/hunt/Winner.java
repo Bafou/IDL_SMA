@@ -11,7 +11,7 @@ public class Winner extends Agent {
 
 	public Winner(Environment environment, Random rand, Position pos) {
 		super(environment, rand, pos);
-		color = Color.DARK_GRAY;
+		color = Color.GREEN;
 	}
 
 	@Override

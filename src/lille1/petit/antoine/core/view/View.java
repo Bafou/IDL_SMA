@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -71,6 +72,7 @@ public class View extends JPanel implements Observer {
 			g2.fillOval(agent.getPosition().getPosX()*boxSize, agent.getPosition().getPosY()*boxSize, boxSize, boxSize);
 		}
 
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 }

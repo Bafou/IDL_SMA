@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
@@ -18,8 +20,9 @@ public class Avatar extends Agent implements KeyListener {
 	protected int defendersEated;
 	protected int invicibility;
 	protected int tick;
+	protected SMAHunt sma;
 
-	public Avatar(final Environment environment, final Random rand, final Position pos, final Dijkstra dij) {
+	public Avatar(final Environment environment, final Random rand, final Position pos, final Dijkstra dij, final SMAHunt smaHunt) {
 		super(environment, rand, pos);
 		color = Color.BLUE;
 		defendersEated = 0;
@@ -27,6 +30,7 @@ public class Avatar extends Agent implements KeyListener {
 		dijkstra = dij;
 		dijkstra.compute(this.position, invicibility > 0);
 		tick = 0;
+		sma = smaHunt;
 	}
 
 	@Override
@@ -37,7 +41,11 @@ public class Avatar extends Agent implements KeyListener {
 				color = Color.BLUE;
 			}
 			invicibility--;
-
+			
+			if (defendersEated == 4 && !sma.asWinner()) {
+				sma.addWinner();
+			}
+			
 			int nextX = position.getPosX() + dirX;
 			int nextY = position.getPosY() + dirY;
 			if (environment.isToric()) {
@@ -75,13 +83,15 @@ public class Avatar extends Agent implements KeyListener {
 			environment.removeAt(collided.getPosition());
 			defendersEated++;
 			setInvicibleColor();
-			invicibility = 5;
+			invicibility = PropertiesReader.invicibilityTime;
 		} else if (collided instanceof Hunter) {
 			if (invicibility <= 0) {
-				System.out.println("Joueur marche sur ennemi");
+				JOptionPane.showMessageDialog(null, "You loose");
+				sma.endGame();
 			}
 		} else if (collided instanceof Winner) {
-			// End the game
+			JOptionPane.showMessageDialog(null, "You win");
+			sma.endGame();
 		} else if (collided instanceof Wall) {
 			return; // don't move
 		}

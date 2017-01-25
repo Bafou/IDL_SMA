@@ -23,15 +23,24 @@ public class PropertiesReader implements KeyListener {
 	public static int refresh = 1;
 	public static int nbParticles = 20;
 	public static boolean toric = false;
+	
 	public static int nbShark = 20;
 	public static int nbFish = 100;
 	public static int breedAgeShark = 10;
 	public static int breedAgeFish = 2;
 	public static int starveTime = 3;
-	public static int defenderLife = 20;
-	public static int avatarSpeed = 2;
-	public static int hunterSpeed = 5;
+
+	public static int nbDefender = 4;
+	public static int nbHunter = 2;
+	public static int defenderLife = 200;
+	public static int avatarSpeed = 4;
+	public static int hunterSpeed = 8;
+	public static int invicibilityTime = 20;
+	public static int percentageWall = 20;
+	
+	
 	private static PropertiesReader INSTANCE = new PropertiesReader();
+	
 
 	private PropertiesReader () {
 		
@@ -66,11 +75,20 @@ public class PropertiesReader implements KeyListener {
 			refresh = Integer.parseInt(prop.getProperty("refresh"));
 			nbParticles = Integer.parseInt(prop.getProperty("nbParticles"));
 			toric = Boolean.parseBoolean(prop.getProperty("toric"));
+			
 			nbShark = Integer.parseInt(prop.getProperty("nbShark"));
 			nbFish = Integer.parseInt(prop.getProperty("nbFish"));
 			breedAgeShark = Integer.parseInt(prop.getProperty("breedAgeShark"));
 			breedAgeFish = Integer.parseInt(prop.getProperty("breedAgeFish"));
 			starveTime = Integer.parseInt(prop.getProperty("starveTime"));
+			
+			nbDefender = Integer.parseInt(prop.getProperty("nbDefender"));
+			nbHunter = Integer.parseInt(prop.getProperty("nbHunter"));
+			defenderLife = Integer.parseInt(prop.getProperty("defenderLife"));
+			avatarSpeed = Integer.parseInt(prop.getProperty("avatarSpeed"));
+			hunterSpeed = Integer.parseInt(prop.getProperty("hunterSpeed"));
+			invicibilityTime = Integer.parseInt(prop.getProperty("invicibilityTime"));
+			percentageWall = Integer.parseInt(prop.getProperty("percentageWall"));
 
 		} catch (final IOException ex) {
 			ex.printStackTrace();

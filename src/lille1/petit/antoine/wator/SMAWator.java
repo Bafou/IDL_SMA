@@ -63,4 +63,15 @@ public class SMAWator extends SMA {
 		}
 	}
 
+	@Override
+	protected void actionTurn(int tick) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean asEnded() {
+		return false;
+	}
+
 }

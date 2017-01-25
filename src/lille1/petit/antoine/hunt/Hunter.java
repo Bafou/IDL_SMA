@@ -3,6 +3,8 @@ package lille1.petit.antoine.hunt;
 import java.awt.Color;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import lille1.petit.antoine.core.Agent;
 import lille1.petit.antoine.core.Environment;
 import lille1.petit.antoine.core.Position;
@@ -14,12 +16,14 @@ public class Hunter extends Agent {
 	private Dijkstra dijkstra;
 	private int tick;
 	protected Position nextMove;
+	protected SMAHunt sma;
 	
-	public Hunter(Environment environment, final Random rand, final Position pos, final Dijkstra dijkstra) {
+	public Hunter(Environment environment, final Random rand, final Position pos, final Dijkstra dijkstra, final SMAHunt smaHunt) {
 		super(environment, rand, pos);
 		this.dijkstra = dijkstra;
 		this.color = Color.RED;
 		tick = 0;
+		sma = smaHunt;
 	}
 
 	@Override
@@ -64,11 +68,12 @@ public class Hunter extends Agent {
 	public void agentCollisionReaction(int nextPosX, int nextPosY) {
 		Agent collided = environment.getAgentAt(new Position(nextPosX, nextPosY));
 		if (collided instanceof Hunter) {
-			return; // ne transperce pas un allié
+			return; // ne transperce pas un allie
 		} else if (collided instanceof Wall) {
 			return; // don't move
-		} else if (collided instanceof Agent) {
-			System.out.println("Ennemi marche sur joueur");
+		} else if (collided instanceof Avatar) {
+			JOptionPane.showMessageDialog(null, "You loose");
+			sma.endGame();
 		}
 		moveTo(new Position(nextPosX, nextPosY));
 	}

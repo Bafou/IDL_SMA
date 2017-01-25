@@ -67,7 +67,7 @@ public abstract class SMA extends Observable {
 		setChanged();
 		notifyObservers();
 		long startTimeTotal = System.currentTimeMillis();
-		while (PropertiesReader.nbTicks == 0 || tick < PropertiesReader.nbTicks) {
+		while ((PropertiesReader.nbTicks == 0 && !asEnded()) || tick < PropertiesReader.nbTicks) {
 			long startTime = System.currentTimeMillis();
 			switch (PropertiesReader.sheduling) {
 			case 0:
@@ -93,6 +93,7 @@ public abstract class SMA extends Observable {
 			toBeRemovedAgentList.clear();
 			
 			writeOutput();
+			actionTurn(tick);
 			
 			tick++;
 
@@ -118,10 +119,16 @@ public abstract class SMA extends Observable {
 		long endTimeTotal = System.currentTimeMillis();
 		long durationTotal = (endTimeTotal - startTimeTotal);
 		System.out.println("Total time : " + durationTotal + " ms");
-		outputWriter.close();
+		if (outputWriter != null) {
+			outputWriter.close();
+		}
 
 	}
 	
+	protected abstract boolean asEnded();
+
+	protected abstract void actionTurn(int tick) ;
+
 	protected abstract void initOutput();
 	
 	protected abstract void writeOutput();

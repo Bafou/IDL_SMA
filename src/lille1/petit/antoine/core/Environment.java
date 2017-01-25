@@ -13,7 +13,7 @@ public class Environment {
 	private boolean isToric;
 
 	private Random rand;
-	
+
 	private SMA sma;
 
 	public boolean isToric() {
@@ -54,22 +54,38 @@ public class Environment {
 			}
 		}
 	}
-	
-	public void removeAt(final Position pos ) {
+
+	public void removeAt(final Position pos) {
 		sma.removeAgent(agentTab[pos.getPosX()][pos.getPosY()]);
 		agentTab[pos.getPosX()][pos.getPosY()] = null;
+		freePosition.add(pos);
 	}
-	
-	public Agent getAgentAt (final Position pos) {
+
+	public Agent getAgentAt(final Position pos) {
 		return agentTab[pos.getPosX()][pos.getPosY()];
 	}
-	
-	public void move(int previousX, int previousY, int newX, int newY){
+
+	public void move(int previousX, int previousY, int newX, int newY) {
 		agentTab[newX][newY] = agentTab[previousX][previousY];
 		agentTab[previousX][previousY] = null;
+		// freePosition.remove(new Position(newX, newY));
+		// freePosition.add(new Position(previousX, previousY));
 	}
 
 	public boolean isInside(final Position pos) {
-		return (pos.getPosX() >=0) && (pos.getPosX() < agentTab.length) && (pos.getPosY() >=0) && (pos.getPosY() < agentTab[0].length);
+		return (pos.getPosX() >= 0) && (pos.getPosX() < agentTab.length) && (pos.getPosY() >= 0)
+				&& (pos.getPosY() < agentTab[0].length);
 	}
+
+	public void refreshFreePosition() {
+		for (int x = 0; x < agentTab.length; x++) {
+			for (int y = 0; y < agentTab[0].length; y++) {
+				if (agentTab[x][y] == null) {
+					final Position pos = new Position(x, y);
+					this.freePosition.add(pos);
+				}
+			}
+		}
+	}
+	
 }
